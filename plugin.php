@@ -1,16 +1,18 @@
 <?php
+
 namespace Elementree;
 
 if (!defined('ABSPATH')) {
-    exit('Press Enter to proceed...');
+	exit('Press Enter to proceed...');
 }
 
 /**
- * Elementree plugin.
+ * ClientRender plugin.
  *
  * @since 1.0.0
  */
-class Plugin {
+class Plugin
+{
 
 	/**
 	 * Instance.
@@ -33,64 +35,34 @@ class Plugin {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	*/
-	public function get_widget($component_name, $uuid, $settings){
+	 */
+	public function get_markup($widget_name, $settings)
+	{
 		$settings = json_encode($settings);
-        
-        return "<div id='$uuid' client-render='$component_name'></div>
-              <script>
-                CRRender(document.getElementById('$uuid'), '$component_name', $settings);
-              </script>";
+		$hash = md5(uniqid(rand(), TRUE));
+
+		return "
+   		<div id='$hash'></div>
+		  <script>
+		 		window.ElementreeWidgets('$widget_name', document.getElementById('$hash'), `$settings`)
+		  </script>
+	    ";
 	}
 
 	/**
-	 * Add menu page.
+	 * Basic shortcode.
 	 *
-	 * Written a page by add_menu_page, using client-render content.
+	 * Written a shortcode, using elementree widget. [elementree widget="my_widget_name" value="123" /]
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 *
-	*/
-	public function add_menu_page($page_name, $menu_slug, $component_name, $uuid, $settings = [], $icon = 'dashicons-chart-pie'){
-			
-		add_menu_page(
-			$page_name,
-			$page_name,
-			'manage_options',
-			$menu_slug, 
-			function() use ($component_name, $uuid, $settings ) {
-				echo $this->get_widget($component_name, $uuid, $settings);
-			},
-			$icon
-		);
-					
+	 */
+	public function elementree_shortcode($atts = array(), $content = null)
+	{
+		return $this->get_markup($atts['widget'], $atts);
 	}
 
-	/**
-	 * Add submenu page.
-	 *
-	 * Written a page by add_submenu_page, using client-render content.
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 *
-	*/
-	public function add_submenu_page($parent_slug, $page_name, $menu_slug, $component_name, $uuid, $settings = []){
-			
-		add_submenu_page(
-			$parent_slug,
-			$page_name,
-			$page_name,
-			'manage_options',
-			$menu_slug, 
-			function() use ($component_name, $uuid, $settings ) {
-				echo $this->get_widget($component_name, $uuid, $settings);
-			}
-		);
-					
-	}
-	
 	/**
 	 * Instance.
 	 *
@@ -102,32 +74,47 @@ class Plugin {
 	 *
 	 * @return Plugin An instance of the class.
 	 */
-    public static function instance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
+	public static function instance()
+	{
+		if (is_null(self::$instance)) {
+			self::$instance = new self();
 		}
-		
+	}
+
 	/**
 	 * Plugin constructor.
 	 *
-	 * Initializing Elementree plugin.
+	 * Initializing Elementor Experts plugin.
 	 *
 	 * @since 1.0.0
 	 * @access private
 	 */
-    private function __construct() {	
-		// adding settings page
+	private function __construct()
+	{
+		// setup settings page
 		new Settings();
 
-		// adding js files
-		add_action('init', function() {
-		  wp_enqueue_script( 'elementree-base', plugin_dir_url( __FILE__ ) . 'assets/js/elementree-base.js', [], false, false );
-		  wp_enqueue_script( 'elementree-components', get_option('client_render_components_js_path'), [ 'elementree-base' ], false, false );
-	
+		// add shortcodes
+		add_shortcode('elementree', [$this, 'elementree_shortcode']);
+
+		// add assets
+		add_action('init', function () {
+
+			$widgets_files  = explode(PHP_EOL, get_option('elementree_widgets_files'));
+
+			foreach ($widgets_files as $key => $path) {
+
+				$extension = pathinfo(trim($path), PATHINFO_EXTENSION);
+
+				if ($extension == 'js') {
+					wp_enqueue_script('elementree-widgets-' . $key, trim($path));
+				}
+				if ($extension == 'css') {
+					wp_enqueue_style('elementree-widgets-' . $key, trim($path));
+				}
+			}
 		}, 100);
-		}
+	}
 }
 
 Plugin::instance();

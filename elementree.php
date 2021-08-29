@@ -12,7 +12,7 @@
  */
 
 if (!defined('ABSPATH')) {
-    exit('Press Enter to proceed...');
+	exit('Press Enter to proceed...');
 }
 
 require __DIR__ . '/includes/settings.php';
