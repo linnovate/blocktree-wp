@@ -23,13 +23,16 @@ This plugin requires:
 
 ```php
 
-// Basic markup
+// Basic markup:
+
 echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
 
 // Set a shortcode used elementree markup
+
 do_shortcode('[elementree widget="my_widget_name" value="123" /]');
 
-// Add simple page & sub page used elementree markup
+// Add simple page & sub page used elementree markup:
+
 add_action('admin_menu', function() {
 
   add_menu_page(
@@ -58,6 +61,25 @@ add_action('admin_menu', function() {
 
 });
 
+
+// Elementor widget-render example:
+
+class MyElementorWidget extends Widget_Base {
+
+  protected function render() {
+
+    $widget_name = $this->get_name();
+    $settings = $this->get_data();
+
+    if ($settings) {
+        $settings = $settings['settings'];
+    }
+        
+    echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+  
+  }
+
+}
 ```
 
 == Screenshots ==

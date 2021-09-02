@@ -1,22 +1,25 @@
 ## Manage Back office with Elementree
 
-### == Installation ==
+### Installation
 
 1. Upload the elementree plugin to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Add widgets files at /wp-admin/options-general.php?page=elementree
+3. Add widgets files at /wp-admin/options-general.php?page=elementree.
 
-### == Exemple ==
+### Exemple
 
 ```php
 
-// Basic markup
+// Basic markup:
+
 echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
 
 // Set a shortcode used elementree markup
+
 do_shortcode('[elementree widget="my_widget_name" value="123" /]');
 
-// Add simple page & sub page used elementree markup
+// Add simple page & sub page used elementree markup:
+
 add_action('admin_menu', function() {
 
   add_menu_page(
@@ -45,5 +48,24 @@ add_action('admin_menu', function() {
 
 });
 
+
+// Elementor widget-render example:
+
+class MyElementorWidget extends Widget_Base {
+
+  protected function render() {
+
+    $widget_name = $this->get_name();
+    $settings = $this->get_data();
+
+    if ($settings) {
+        $settings = $settings['settings'];
+    }
+        
+    echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+  
+  }
+
+}
 ```
 

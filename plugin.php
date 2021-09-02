@@ -39,14 +39,38 @@ class Plugin
 	public function get_markup($widget_name, $settings)
 	{
 		$settings = json_encode($settings);
-		$hash = md5(uniqid(rand(), TRUE));
+		$hash = uniqid(rand(), TRUE);
 
 		return "
    		<div id='$hash'></div>
 		  <script>
-		 		window.ElementreeWidgets('$widget_name', document.getElementById('$hash'), `$settings`)
+		 		window.ElementreeWidgets('$widget_name', document.getElementById('$hash'), $settings)
 		  </script>
 	    ";
+	}
+
+	/**
+	 * Load the assets.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 */
+	private function assets()
+	{
+		$widgets_files  = explode(PHP_EOL, get_option('elementree_widgets_files'));
+
+		foreach ($widgets_files as $key => $path) {
+
+			$extension = pathinfo(strtok(trim($path), '?'), PATHINFO_EXTENSION);
+
+			if ($extension == 'js') {
+				wp_enqueue_script('elementree-widgets-' . $key, trim($path));
+			}
+			if ($extension == 'css') {
+				wp_enqueue_style('elementree-widgets-' . $key, trim($path));
+			}
+		}
 	}
 
 	/**
@@ -99,20 +123,7 @@ class Plugin
 
 		// add assets
 		add_action('init', function () {
-
-			$widgets_files  = explode(PHP_EOL, get_option('elementree_widgets_files'));
-
-			foreach ($widgets_files as $key => $path) {
-
-				$extension = pathinfo(trim($path), PATHINFO_EXTENSION);
-
-				if ($extension == 'js') {
-					wp_enqueue_script('elementree-widgets-' . $key, trim($path));
-				}
-				if ($extension == 'css') {
-					wp_enqueue_style('elementree-widgets-' . $key, trim($path));
-				}
-			}
+          $this->assets();
 		}, 100);
 	}
 }

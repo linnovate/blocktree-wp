@@ -49,7 +49,7 @@ class Settings
 	public function widgets_files_form_element()
 	{
 		?>
-			<textarea style="width: 100%" name="elementree_widgets_files" id="elementree_widgets_files" value="<?php echo get_option('elementree_widgets_files'); ?>"></textarea>
+			<textarea style="width: 100%" name="elementree_widgets_files" id="elementree_widgets_files" rows="4"><?php echo get_option('elementree_widgets_files'); ?></textarea>
 		<?php
 	}
 
