@@ -17,7 +17,6 @@ echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
 do_shortcode('[elementree widget="my_widget_name" value="123" /]');
 
 // Add simple page & sub page used elementree markup:
-
 add_action('admin_menu', function() {
 
   add_menu_page(
