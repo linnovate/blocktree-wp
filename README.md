@@ -11,11 +11,9 @@
 ```php
 
 // Basic markup:
-
 echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
 
 // Set a shortcode used elementree markup
-
 do_shortcode('[elementree widget="my_widget_name" value="123" /]');
 
 // Add simple page & sub page used elementree markup:
@@ -50,7 +48,6 @@ add_action('admin_menu', function() {
 
 
 // Elementor widget-render example:
-
 class MyElementorWidget extends Widget_Base {
 
   protected function render() {
