@@ -1,8 +1,8 @@
-## Manage Back office with Elementree
+## Manage Back office with Blocktree
 
 ### Installation
 
-1. Upload the elementree plugin to the /wp-content/plugins/ directory.
+1. Upload the blocktree plugin to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Add widgets files at /wp-admin/options-general.php?page=elementree.
 

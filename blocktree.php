@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Plugin Name: Elementree
+ * Plugin Name: Blocktree
  * # Plugin URI: https://linnovate.net/
- * Description: Manage Elementree for Wordpress.
- * Version: 1.0.2
+ * Description: Manage Blocktree for Wordpress.
+ * Version: 1.1.0
  * Author: Linnovate
  * Author URI: https://linnovate.net/
  * License: GPLv2 or later
- * Text Domain: elementree
+ * Text Domain: blocktree
  */
 
 if (!defined('ABSPATH')) {
