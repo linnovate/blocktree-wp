@@ -1,6 +1,6 @@
 <?php
 
-namespace Elementree;
+namespace Blocktree;
 
 if (!defined('ABSPATH')) {
 	exit('Press Enter to proceed...');
@@ -44,7 +44,7 @@ class Plugin
 		return "
    		<div id='$hash'></div>
 		  <script>
-		 		window.ElementreeWidgets('$widget_name', document.getElementById('$hash'), $settings)
+		 		window.BlocktreeWidgets('$widget_name', document.getElementById('$hash'), $settings)
 		  </script>
 	    ";
 	}
@@ -58,17 +58,17 @@ class Plugin
 	 */
 	private function assets()
 	{
-		$widgets_files  = explode(PHP_EOL, get_option('elementree_widgets_files'));
+		$widgets_files  = explode(PHP_EOL, get_option('blocktree_widgets_files'));
 
 		foreach ($widgets_files as $key => $path) {
 
 			$extension = pathinfo(strtok(trim($path), '?'), PATHINFO_EXTENSION);
 
 			if ($extension == 'js') {
-				wp_enqueue_script('elementree-widgets-' . $key, trim($path));
+				wp_enqueue_script('blocktree-widgets-' . $key, trim($path));
 			}
 			if ($extension == 'css') {
-				wp_enqueue_style('elementree-widgets-' . $key, trim($path));
+				wp_enqueue_style('blocktree-widgets-' . $key, trim($path));
 			}
 		}
 	}
@@ -76,13 +76,13 @@ class Plugin
 	/**
 	 * Basic shortcode.
 	 *
-	 * Written a shortcode, using elementree widget. [elementree widget="my_widget_name" value="123" /]
+	 * Written a shortcode, using blocktree widget. [blocktree widget="my_widget_name" value="123" /]
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 *
 	 */
-	public function elementree_shortcode($atts = array(), $content = null)
+	public function blocktree_shortcode($atts = array(), $content = null)
 	{
 		return $this->get_markup($atts['widget'], $atts);
 	}
@@ -119,11 +119,11 @@ class Plugin
 		new Settings();
 
 		// add shortcodes
-		add_shortcode('elementree', [$this, 'elementree_shortcode']);
+		add_shortcode('blocktree', [$this, 'blocktree_shortcode']);
 
 		// add assets
 		add_action('init', function () {
-          $this->assets();
+			$this->assets();
 		}, 100);
 	}
 }

@@ -4,19 +4,19 @@
 
 1. Upload the blocktree plugin to the /wp-content/plugins/ directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Add widgets files at /wp-admin/options-general.php?page=elementree.
+3. Add widgets files at /wp-admin/options-general.php?page=blocktree.
 
 ### Exemple
 
 ```php
 
 // Basic markup:
-echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
 
-// Set a shortcode used elementree markup
-do_shortcode('[elementree widget="my_widget_name" value="123" /]');
+// Set a shortcode used blocktree markup
+do_shortcode('[blocktree widget="my_widget_name" value="123" /]');
 
-// Add simple page & sub page used elementree markup:
+// Add simple page & sub page used blocktree markup:
 add_action('admin_menu', function() {
 
   add_menu_page(
@@ -25,7 +25,7 @@ add_action('admin_menu', function() {
     $capability,
     $menu_slug, 
     function() use ( $widget_name, $settings ) {
-      echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+      echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
     },
     $icon_url,
     $position
@@ -38,7 +38,7 @@ add_action('admin_menu', function() {
     $capability,
     $menu_slug,
     function() use ( $widget_name, $settings ) {
-      echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+      echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
     },
     $position
   );
@@ -58,7 +58,7 @@ class MyElementorWidget extends Widget_Base {
         $settings = $settings['settings'];
     }
         
-    echo \Elementree\Plugin::$instance->get_markup($widget_name, $settings);
+    echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
   
   }
 

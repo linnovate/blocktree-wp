@@ -1,6 +1,6 @@
 <?php
 
-namespace Elementree;
+namespace Blocktree;
 
 if (!defined('ABSPATH')) {
 	exit;
@@ -17,30 +17,30 @@ class Settings
 	 */
 	public function __construct()
 	{
-		add_action('admin_init', array($this, 'elementree_setup_init'));
-		add_action('admin_menu', array($this, 'elementree_setup_menu'));
+		add_action('admin_init', array($this, 'blocktree_setup_init'));
+		add_action('admin_menu', array($this, 'blocktree_setup_menu'));
 	}
 
 	/**
 	 * add settings sections and fields for the config page of the plugin in admin panel
 	 */
-	public function elementree_setup_init()
+	public function blocktree_setup_init()
 	{
-		add_settings_section("elementree_settings", "", array($this, 'section_callback'), "elementree_settings_fields");
+		add_settings_section("blocktree_settings", "", array($this, 'section_callback'), "blocktree_settings_fields");
 
-		add_settings_field('elementree_widgets_files', 'Elementree widgets files: ', array($this, 'widgets_files_form_element'), 'elementree_settings_fields', "elementree_settings");
+		add_settings_field('blocktree_widgets_files', 'Blocktree widgets files: ', array($this, 'widgets_files_form_element'), 'blocktree_settings_fields', "blocktree_settings");
 
-		register_setting("elementree_settings", "elementree_widgets_files");
+		register_setting("blocktree_settings", "blocktree_widgets_files");
 	}
 
 	/**
-	 * function: elementree_setup_menu
+	 * function: blocktree_setup_menu
 	 *
 	 * creating a menu item in the admin menu for the plugin
 	 */
-	public function elementree_setup_menu()
+	public function blocktree_setup_menu()
 	{
-		add_options_page('Elementree', 'Elementree', 'manage_options', 'elementree', array($this, 'elementree_config_form'));
+		add_options_page('Blocktree', 'Blocktree', 'manage_options', 'blocktree', array($this, 'blocktree_config_form'));
 	}
 
 	/**
@@ -48,9 +48,9 @@ class Settings
 	 */
 	public function widgets_files_form_element()
 	{
-		?>
-			<textarea style="width: 100%" name="elementree_widgets_files" id="elementree_widgets_files" rows="4"><?php echo get_option('elementree_widgets_files'); ?></textarea>
-		<?php
+?>
+		<textarea style="width: 100%" name="blocktree_widgets_files" id="blocktree_widgets_files" rows="4"><?php echo get_option('blocktree_widgets_files'); ?></textarea>
+	<?php
 	}
 
 	/**
@@ -63,24 +63,24 @@ class Settings
 	}
 
 	/**
-	 * function: elementree_config_form
+	 * function: blocktree_config_form
 	 *
 	 * creating a config form for the plugin
 	 */
-	public function elementree_config_form()
+	public function blocktree_config_form()
 	{
-		?>
-			<div>
+	?>
+		<div>
 
-				<h1>Elementree Settings</h1>
-				<form method="post" action="options.php">
-					<?php
-					settings_fields("elementree_settings");
-					do_settings_sections("elementree_settings_fields");
-					submit_button();
-					?>
-				</form>
-			</div>
-		<?php
+			<h1>Blocktree Settings</h1>
+			<form method="post" action="options.php">
+				<?php
+				settings_fields("blocktree_settings");
+				do_settings_sections("blocktree_settings_fields");
+				submit_button();
+				?>
+			</form>
+		</div>
+<?php
 	}
 }
