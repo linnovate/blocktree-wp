@@ -2,9 +2,9 @@
 Contributors: Linnovate
 Donate link: https://linnovate.net/
 Tags: blocktree
-Requires at least: 4.0
-Tested up to: 4.9
-Stable tag: trunk
+Requires at least: 5.0
+Tested up to: 5.8
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
 
 // Set a shortcode used blocktree markup
 
-do_shortcode('[blocktree widget="my_widget_name" value="123" /]');
+do_shortcode('[blocktree component-name="my_widget_name" value="123" /]');
 
 // Add simple page & sub page used blocktree markup:
 
@@ -41,7 +41,7 @@ add_action('admin_menu', function() {
     $capability,
     $menu_slug, 
     function() use ( $widget_name, $settings ) {
-      echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
+      echo \Blocktree\Plugin::$instance->get_markup($component_name, $settings = [], $handler_key);
     },
     $icon_url,
     $position
@@ -54,7 +54,7 @@ add_action('admin_menu', function() {
     $capability,
     $menu_slug,
     function() use ( $widget_name, $settings ) {
-      echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
+      echo \Blocktree\Plugin::$instance->get_markup($component_name, $settings = [], $handler_key);
     },
     $position
   );
@@ -75,7 +75,7 @@ class MyElementorWidget extends Widget_Base {
         $settings = $settings['settings'];
     }
         
-    echo \Blocktree\Plugin::$instance->get_markup($widget_name, $settings);
+    echo \Blocktree\Plugin::$instance->get_markup($component_name, $settings = [], $handler_key);
   
   }
 
@@ -86,6 +86,3 @@ class MyElementorWidget extends Widget_Base {
 
 
 == Changelog ==
-
-
-

@@ -4,7 +4,7 @@
  * Plugin Name: Blocktree
  * # Plugin URI: https://linnovate.net/
  * Description: Manage Blocktree for Wordpress.
- * Version: 1.1.0
+ * Version: 1.0.0
  * Author: Linnovate
  * Author URI: https://linnovate.net/
  * License: GPLv2 or later

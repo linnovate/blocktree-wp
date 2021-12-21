@@ -1,6 +1,6 @@
 
 // Register - widgets
-window.widgets = {};
+window.widgets || (window.widgets = {});
 widgets["my_widget_name"] = (props) => `Hello ${props.value}!!!`;
 
 // Setup - function
