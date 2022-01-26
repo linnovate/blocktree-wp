@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * ClientRender plugin.
+ * Blocktree plugin.
  *
  * @since 1.0.0
  */
