@@ -1,0 +1,33 @@
+
+# Github link
+# -----------
+# https://github.com/linnovate/blocktree-wp
+
+
+# Wordpress link
+# --------------
+# https://wordpress.org/plugins/blocktree
+
+
+# Developers link
+# ---------------
+# https://wordpress.org/plugins/blocktree/#developers
+
+
+# Svn cli
+# -------
+# https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/
+
+
+# Update flow
+# ------------
+# 1. clone:  git clone https://github.com/linnovate/blocktree-wp.git
+#    clone:  svn co https://plugins.svn.wordpress.org/blocktree
+
+# 2. update: [change code of the git]
+#    update: [copy git files without .git/.update-flow/docker-compose.yml to the svn files "/trunk"]
+# 3. test:   docker-compose up [then move plugin code to wordpress/wp-content/plugins/blocktree]
+
+# 4. push:   git commite -am 'my msg' & git push
+#    push:   svn commit -m 'my msg'
+

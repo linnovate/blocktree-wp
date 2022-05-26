@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Blocktree plugin.
+ * ClientRender plugin.
  *
  * @since 1.0.0
  */
@@ -38,6 +38,8 @@ class Plugin
    */
   public function get_markup($component_name, $settings = [], $handler_key = null)
   {
+    // $this->assets();
+
     $handler_key = $handler_key ? $handler_key : esc_attr(get_option('blocktree_handler_key'));
 
     $settings = json_encode($settings);
@@ -63,14 +65,37 @@ class Plugin
    */
   private function assets()
   {
-    $widgets_files  = explode(PHP_EOL, get_option('blocktree_sources'));
+    $widgets_files = explode(PHP_EOL, get_option('blocktree_sources'));
+
+    // mode filter
+    $widgets_files = array_filter($widgets_files, function($url, $key) {
+      
+      $query = parse_url(trim($url), PHP_URL_QUERY);
+      parse_str($query, $params);
+      $mode = $params ? $params['mode'] : null;
+
+      if (!$mode) {
+        return true;
+      }
+      else if ($mode == 'admin-page' && is_admin()) {
+        return true;
+      }
+      elseif ($mode == 'user' && !is_admin()) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+    }, ARRAY_FILTER_USE_BOTH);
+
 
     foreach ($widgets_files as $key => $path) {
 
       $extension = pathinfo(strtok(trim($path), '?'), PATHINFO_EXTENSION);
 
       if ($extension == 'js') {
-        wp_enqueue_script('blocktree-sources-' . $key, trim($path));
+        wp_enqueue_script('blocktree-sources-' . $key, trim($path), [], null, false);
       }
       if ($extension == 'css') {
         wp_enqueue_style('blocktree-sources-' . $key, trim($path));
